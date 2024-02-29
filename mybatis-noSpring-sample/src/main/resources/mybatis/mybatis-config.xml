@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- 定义全局的类型别名 -->
+    <typeAliases>
+        <!-- 单个类型别名定义 -->
+        <typeAlias alias="Hmap" type="java.util.HashMap"/>
+    </typeAliases>
+
+</configuration>

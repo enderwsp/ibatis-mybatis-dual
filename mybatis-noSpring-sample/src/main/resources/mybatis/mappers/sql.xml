@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis">
+
+    <!-- 结果映射示例，如果实体类属性和数据库列名不一致时需要使用 -->
+    <resultMap id="userResultMap" type="java.util.HashMap">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+    </resultMap>
+    <!-- 定义查询用户信息的 SQL 语句 -->
+    <select id="select" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT * FROM USERTEST WHERE username like #{usernamelike}
+    </select>
+
+    <!-- 插入用户信息的 SQL 语句 -->
+    <insert id="insert" parameterType="java.util.HashMap">
+        INSERT INTO USERTEST(id,username, password, email)
+        VALUES(#{id},#{username}, #{password}, #{email})
+    </insert>
+
+    <!-- 更新用户信息的 SQL 语句 -->
+    <update id="update" parameterType="java.util.HashMap">
+        UPDATE USERTEST SET username=#{username}, password=#{password}, email=#{email}
+        WHERE id=#{id}
+    </update>
+
+    <!-- 删除用户信息的 SQL 语句 -->
+    <delete id="delete" parameterType="java.util.HashMap">
+        DELETE FROM USERTEST WHERE id = #{id}
+    </delete>
+
+
+
+</mapper>

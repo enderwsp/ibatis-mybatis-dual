@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="testibatis">
+
+    <resultMap id="resm" class="java.util.HashMap">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <select id="select" parameterClass="java.util.HashMap" resultMap="resm">
+        SELECT * FROM USERTEST WHERE username like #usernamelike#
+    </select>
+
+    <insert id="insert" parameterClass="java.util.HashMap">
+        INSERT INTO USERTEST(id,username, password, email)
+        VALUES(#id#,#username#, #password#, #email#)
+    </insert>
+
+    <update id="update" parameterClass="java.util.HashMap">
+        UPDATE USERTEST SET username=#username#, password=#password#, email=#email#
+        WHERE id=#id#
+    </update>
+
+    <delete id="delete" parameterClass="java.util.HashMap">
+        DELETE FROM USERTEST WHERE id = #id#
+    </delete>
+
+</sqlMap>
