@@ -1,106 +1,141 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-      
-  <modelVersion>4.0.0</modelVersion>
-      
-  <groupId>com.per.vic</groupId>
-      
-  <artifactId>ibatis-mybatis-dual</artifactId>
-      
-  <version>0.0.1-SNAPSHOT</version>
-      
-  <packaging>pom</packaging>
-      
-  <name>ibatis-mybatis-dual</name>
-      
-  <description>Demo project for Spring Boot</description>
-      
-  <modules>
-            
-    <module>ibatis-noSpring-sample</module>
-            
-    <module>mybatis-noSpring-sample</module>
-          
-    <module>ibatis-mybatis-utils</module>
-      
-  </modules>
-      
-  <properties>
-            
-    <java.version>8</java.version>
-        
-  </properties>
-      
-  <dependencies>
-            
-    <dependency>
-                  
-      <groupId>com.h2database</groupId>
-                  
-      <artifactId>h2</artifactId>
-                  
-      <version>2.2.224</version>
-              
-    </dependency>
-        
-  </dependencies>
-      
-  <dependencyManagement>
-            
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.per.vic</groupId>
+
+    <artifactId>ibatis-mybatis-dual</artifactId>
+
+    <version>0.0.1-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <name>ibatis-mybatis-dual</name>
+
+    <description>Demo project for Spring Boot</description>
+
+    <modules>
+
+        <module>ibatis-noSpring-sample</module>
+
+        <module>mybatis-noSpring-sample</module>
+
+        <module>ibatis-mybatis-utils</module>
+        <module>ibatis-withSpring-sample</module>
+        <module>mybatis-withSpring-sample</module>
+
+    </modules>
+
+    <properties>
+
+        <java.version>8</java.version>
+
+    </properties>
+
     <dependencies>
-                  
-      <dependency>
-                        
-        <groupId>org.apache.ibatis</groupId>
-                        
-        <artifactId>ibatis-sqlmap</artifactId>
-                        
-        <version>2.3.0</version>
-                    
-      </dependency>
-                  
-      <dependency>
-                        
-        <groupId>org.mybatis</groupId>
-                        
-        <artifactId>mybatis</artifactId>
-                        
-        <version>3.5.13</version>
-                    
-      </dependency>
-                  
-      <dependency>
-                        
-        <groupId>org.apache.logging.log4j</groupId>
-                        
-        <artifactId>log4j-slf4j2-impl</artifactId>
-                        
-        <version>2.23.0</version>
-                    
-      </dependency>
-                  
-      <dependency>
-                        
-        <groupId>org.apache.logging.log4j</groupId>
-                        
-        <artifactId>log4j-core</artifactId>
-                        
-        <version>2.23.0</version>
-                    
-      </dependency>
-                  
-      <dependency>
-                        
-        <groupId>org.slf4j</groupId>
-                        
-        <artifactId>slf4j-api</artifactId>
-                        
-        <version>2.0.12</version>
-                    
-      </dependency>
-              
+
+        <dependency>
+
+            <groupId>com.h2database</groupId>
+
+            <artifactId>h2</artifactId>
+
+            <version>2.2.224</version>
+
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>6.1.1</version>
+        </dependency>
     </dependencies>
-        
-  </dependencyManagement>
-  
+
+    <dependencyManagement>
+
+        <dependencies>
+
+            <dependency>
+
+                <groupId>org.apache.ibatis</groupId>
+
+                <artifactId>ibatis-sqlmap</artifactId>
+
+                <version>2.3.4.726</version>
+
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-ibatis</artifactId>
+                <version>2.0.8</version>
+            </dependency>
+            <dependency>
+
+                <groupId>org.mybatis</groupId>
+
+                <artifactId>mybatis</artifactId>
+
+                <version>3.5.13</version>
+
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>2.1.0</version>
+            </dependency>
+            <dependency>
+
+                <groupId>org.apache.logging.log4j</groupId>
+
+                <artifactId>log4j-slf4j2-impl</artifactId>
+
+                <version>2.23.0</version>
+
+            </dependency>
+
+            <dependency>
+
+                <groupId>org.apache.logging.log4j</groupId>
+
+                <artifactId>log4j-core</artifactId>
+
+                <version>2.23.0</version>
+
+            </dependency>
+
+            <dependency>
+
+                <groupId>org.slf4j</groupId>
+
+                <artifactId>slf4j-api</artifactId>
+
+                <version>2.0.12</version>
+
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>6.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>6.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>6.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>6.1.1</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
 </project>

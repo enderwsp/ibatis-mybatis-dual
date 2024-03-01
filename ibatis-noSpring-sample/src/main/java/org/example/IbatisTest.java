@@ -5,6 +5,11 @@ import com.ibatis.common.resources.Resources;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 import com.ibatis.sqlmap.client.SqlMapSession;
+import com.ibatis.sqlmap.engine.impl.SqlMapClientImpl;
+import com.ibatis.sqlmap.engine.transaction.TransactionConfig;
+import com.ibatis.sqlmap.engine.transaction.TransactionManager;
+import com.ibatis.sqlmap.engine.transaction.jdbc.JdbcTransactionConfig;
+import org.ibatis.mybatis.utils.DBEnv;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
@@ -25,31 +30,32 @@ public class IbatisTest {
         log.atLevel(Level.INFO);
         String resource = "ibatis/SqlMapConfig.xml";
         Map ps = new HashMap();
-        ps.put("JDBC.Driver", DbTest.DbDriver);
-        ps.put("JDBC.ConnectionURL", DbTest.DbUrl);
-        ps.put("JDBC.Username", DbTest.DbUserName);
-        ps.put("JDBC.Password", DbTest.DbPassword);
+        ps.put("JDBC.Driver", DBEnv.Master.Driver);
+        ps.put("JDBC.ConnectionURL", DBEnv.Master.Url);
+        ps.put("JDBC.Username", DBEnv.Master.UserName);
+        ps.put("JDBC.Password", DBEnv.Master.Password);
         SimpleDataSource dataSource = new SimpleDataSource(ps);
-        SqlMapClient sqlMapClient;
+        SqlMapClientImpl sqlMapClient;
         try {
-            sqlMapClient = SqlMapClientBuilder.buildSqlMapClient(Resources.getResourceAsReader(resource));
+            sqlMapClient = (SqlMapClientImpl) SqlMapClientBuilder.buildSqlMapClient(Resources.getResourceAsReader(resource));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        exeSql(sqlMapClient, dataSource, false);
+        TransactionConfig txc = new JdbcTransactionConfig();
+        txc.setDataSource(dataSource);
+        TransactionManager txm = new TransactionManager(txc);
+        sqlMapClient.getDelegate().setTxManager(txm);
+        exeSql(sqlMapClient, true);
     }
 
-    private static void exeSql(SqlMapClient sqlMapClient, SimpleDataSource dataSource, boolean b) {
+    private static void exeSql(SqlMapClient sqlMapClient, boolean useTx) {
         SqlMapSession session = null;
         Connection con = null;
         try {
             session = sqlMapClient.openSession();
-            con = session.getCurrentConnection();
-            if (con == null) {
-                session.setUserConnection(dataSource.getConnection());
-                con = session.getCurrentConnection();
+            if (useTx) {
+                session.startTransaction();
             }
-            con.setAutoCommit(!b);
             Map dd = new HashMap();
             dd.put("id", 1234);
             dd.put("username", "TestIbatis");
@@ -63,15 +69,15 @@ public class IbatisTest {
             log.info("----------select:rs:" + rs);
             int dudx = session.delete("testibatis.delete", dd);
             log.info("----------delete:dudx:" + dudx);
-            if (b) {
-                con.commit();
+            if (useTx) {
+                session.commitTransaction();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (b) {
+            if (useTx) {
                 try {
-                    con.rollback();
+                    session.endTransaction();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
